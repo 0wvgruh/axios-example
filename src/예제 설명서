@@ -1,0 +1,8 @@
+이 예제는 React와 axios를 사용해 간단한 목록과 상세 페이지를 구현한 것입니다. 
+이 예제는 두 개의 컴포넌트 UserList와 UserDetail로 나뉘어 있으며, 
+UserList에서는 사용자 목록을 보여주고, 
+사용자를 선택하면 UserDetail에서 해당 사용자의 상세 정보를 보여줍니다.
+
+App 컴포넌트가 화면에 UserList와 UserDetail을 렌더링합니다.
+UserList는 목록을 불러오고 각 항목을 클릭할 때마다 onUserClick 함수로 selectedUserId 상태를 업데이트합니다.
+selectedUserId가 업데이트되면 UserDetail이 해당 ID로 사용자 정보를 불러와 표시합니다.

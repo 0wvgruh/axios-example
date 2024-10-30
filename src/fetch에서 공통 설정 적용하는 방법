@@ -1,0 +1,80 @@
+// fetch는 인스턴스를 직접 생성할 수 없으므로, 공통 설정을 함수로 만들어 사용합니다. 
+// 또한, fetch에는 인터셉터가 없기 때문에 공통 설정과 처리를 위한 래퍼 함수를 만들어야 합니다.
+
+// fetch 설정 함수 만들기
+// src/api/fetchInstance.js
+
+const BASE_URL = 'https://jsonplaceholder.typicode.com';
+const DEFAULT_TIMEOUT = 5000;
+const DEFAULT_HEADERS = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer YOUR_TOKEN'
+};
+
+function customFetch(endpoint, options = {}) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
+
+  const config = {
+    ...options,
+    headers: {
+      ...DEFAULT_HEADERS,
+      ...options.headers,
+    },
+    signal: controller.signal,
+  };
+
+  return fetch(`${BASE_URL}${endpoint}`, config)
+    .then((response) => {
+      clearTimeout(id);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      clearTimeout(id);
+      console.error("Fetch error:", error);
+      throw error;
+    });
+}
+
+export default customFetch;
+
+// customFetch: fetch에 BASE_URL, 타임아웃, 기본 헤더를 적용하는 함수입니다. AbortController를 사용해 타임아웃이 지나면 요청을 취소합니다.
+// 오류 처리: response.ok를 체크해 오류가 발생하면 catch에서 처리합니다.
+
+---------------------------------------------------------------------------
+// customFetch 사용 예시
+// src/components/UserList.js
+
+import React, { useState, useEffect } from 'react';
+import customFetch from '../api/fetchInstance';
+
+function UserList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    customFetch('/users')
+      .then(data => setUsers(data))
+      .catch(error => console.error("Error fetching users:", error));
+  }, []);
+
+  return (
+    <div>
+      <h2>User List</h2>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default UserList;
+
+--------------------------------------------
+요약
+axios 인스턴스를 사용하면 공통 URL, 타임아웃, 헤더, 인터셉터 설정이 가능하여 코드 관리가 쉽습니다.
+**fetch**는 인스턴스 개념이 없으므로 커스텀 함수로 공통 설정과 타임아웃, 에러 처리를 구현할 수 있습니다.
