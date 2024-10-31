@@ -77,3 +77,4 @@ function UserList() {
 }
 
 export default UserList;
+검색 밑에 검색값에 해당하는 데이터 title들을 불러오고, 그 title을 클릭하면 title은 가려지고 그 title에 해당하는 url을 보여주는 리액트 구현해줄 수 있어? 
