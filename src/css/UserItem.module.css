@@ -1,0 +1,25 @@
+.listItem {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+  }
+  
+  .listItem p {
+    margin: 5px 0;
+  }
+  
+  .listItem a {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  
+  .listItem a:hover {
+    text-decoration: underline;
+  }
+  

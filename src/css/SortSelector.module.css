@@ -1,0 +1,20 @@
+.sortSelector {
+    margin-bottom: 20px;
+  }
+  
+  .sortSelector label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .sortSelector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  
+  .sortSelector select:focus {
+    border-color: #1e90ff;
+  }
+  
