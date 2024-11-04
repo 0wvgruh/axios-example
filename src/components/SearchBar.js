@@ -1,5 +1,6 @@
 import React from 'react';
-// 검색어 입력
+
+// 검색바 컴포넌트: 검색어 입력을 받아 검색어 상태 업데이트
 function SearchBar({ searchTerm, onSearchChange }) {
   return (
     <input

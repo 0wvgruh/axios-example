@@ -1,47 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import UserList from './components/UserList';
-import SearchBar from './components/SearchBar';
-import Pagination from './components/Pagination';
-import SortSelector from './components/SortSelector';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import SelectedUsersPage from './pages/SelectedUsersPage';
 
+// 최상위 App 컴포넌트: 라우터와 상태 관리
 function App() {
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortKey, setSortKey] = useState("title");
-  const [filteredUsersCount, setFilteredUsersCount] = useState(0);
-  const itemsPerPage = 10;
-
-  const handlePageChange = (page) => setCurrentPage(page);
-  const handleSortChange = (key) => setSortKey(key);
-  const handleSearchChange = (term) => setSearchTerm(term);
-
-  // 검색어가 변경될 때 페이지를 첫 페이지로 이동
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  const [selectedIds, setSelectedIds] = useState([]); // 선택된 사용자 ID 관리
 
   return (
-    <div className="App">
-      <h1>User Management</h1>
-      <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
-      <SortSelector sortKey={sortKey} onSortChange={handleSortChange} />
-      <UserList
-        searchTerm={searchTerm}
-        onUserClick={setSelectedUserId}
-        selectedUserId={selectedUserId}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        sortKey={sortKey}
-        onFilterCountChange={setFilteredUsersCount} // 필터링된 사용자 수 업데이트
-      />
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredUsersCount} // 필터링된 사용자 수에 따라 페이지네이션 조정
-        onPageChange={handlePageChange}
-      />
-    </div>
+    <Router>
+      <Routes>
+        {/* MainPage에 selectedIds와 setSelectedIds 전달 */}
+        <Route path="/" element={<MainPage setSelectedIds={setSelectedIds} selectedIds={selectedIds} />} />
+        {/* SelectedUsersPage에 selectedIds 전달 */}
+        <Route path="/selected-users" element={<SelectedUsersPage selectedIds={selectedIds} />} />
+      </Routes>
+    </Router>
   );
 }
 
