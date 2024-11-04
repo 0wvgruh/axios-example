@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
-// 선택된 사용자 페이지 컴포넌트: 선택된 사용자 목록만 표시
-const SelectedUsersPage = ({ selectedIds }) => {
+const SelectedUsersPage = () => {
+  const { selectedIds } = useContext(UserContext);
+
   return (
     <div>
       <h2>선택된 사용자 목록</h2>
