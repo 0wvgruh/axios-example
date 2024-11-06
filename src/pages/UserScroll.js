@@ -22,14 +22,13 @@ function UserScroll({ searchTerm, sortKey, onCheckboxChange, selectedIds = [] })
   }, [sortKey]);
 
   useEffect(() => {
-    // 쿼리 파라미터에서 userId를 가져와 해당 요소로 스크롤
     const params = new URLSearchParams(location.search);
     const userId = params.get('userId');
     
     if (userId) {
       const userElement = document.getElementById(`user-${userId}`);
       if (userElement) {
-        userElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        userElement.scrollIntoView({  block: 'center' });
       }
     }
   }, [users, location.search]);
